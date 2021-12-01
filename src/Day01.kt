@@ -33,6 +33,8 @@ fun main() {
     pruefe(part2(testInput), 5)
 
     val input = readInput("Day01")
+    pruefe(part1(input), 1184)
+    pruefe(part2(input), 1158)
     println(part1(input))
     println(part2(input))
 }
