@@ -1,30 +1,33 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        var preValue: Int = Int.MAX_VALUE
-        var currentValue: Int
-        var countIncreasedValues = 0
 
-        for (s in input) {
-            currentValue = s.toInt()
-            if (currentValue > preValue) {
+    fun sumIncreased(input: List<Int>): Int {
+        var countIncreasedValues = 0
+        val preIterator = input.iterator()
+        val secondIterator = input.iterator()
+        secondIterator.next()
+
+        while (secondIterator.hasNext()) {
+            if (secondIterator.next() > preIterator.next()) {
                 countIncreasedValues++
             }
-            preValue = currentValue
         }
         return countIncreasedValues
     }
+    fun part1(input: List<String>): Int {
+        return sumIncreased(input.map { s -> s.toInt() })
+    }
 
     fun part2(input: List<String>): Int {
+        val newList:MutableList<Int> = mutableListOf()
+        val integerList = input.map { s -> s.toInt() }
+        val iterator = integerList.listIterator()
 
-        val newList:MutableList<String> = mutableListOf()
-
-        for (currentIndex in IntRange(0, input.size - 3)) {
-            val subList = input.subList(currentIndex, currentIndex + 3)
-            val sum = subList.stream().mapToInt(String::toInt).sum()
-            newList.add("" + sum)
+        while (iterator.hasNext()) {
+            try{newList.add(integerList.subList(iterator.nextIndex(), iterator.nextIndex()+3).sum())}catch(e: Exception){}
+            iterator.next()
         }
 
-        return part1(newList)
+        return sumIncreased(newList)
     }
 
     // test if implementation meets criteria from the description, like:
