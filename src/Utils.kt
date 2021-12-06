@@ -17,3 +17,9 @@ fun pruefe(givenValue: Int, expectedValue: Int) {
         "given: " + givenValue + " but expected: " + expectedValue
     }
 }
+
+fun pruefe(givenValue: Long, expectedValue: Long) {
+    check(givenValue == expectedValue) {
+        "given: " + givenValue + " but expected: " + expectedValue
+    }
+}
