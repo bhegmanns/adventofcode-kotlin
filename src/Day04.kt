@@ -291,10 +291,10 @@ fun main() {
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day04_test")
-    pruefe(part1(testInput), 4512)
+    checkEquals(part1(testInput), 4512)
 
     val input = readInput("Day04")
     println(part1(input))
-    pruefe(part2(testInput), 1924)
+    checkEquals(part2(testInput), 1924)
     println(part2(input))
 }

@@ -29,12 +29,12 @@ fun main() {
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day01_test")
-    pruefe(part1(testInput), 7)
-    pruefe(part2(testInput), 5)
+    checkEquals(part1(testInput), 7)
+    checkEquals(part2(testInput), 5)
 
     val input = readInput("Day01")
-    pruefe(part1(input), 1184)
-    pruefe(part2(input), 1158)
+    checkEquals(part1(input), 1184)
+    checkEquals(part2(input), 1158)
     println(part1(input))
     println(part2(input))
 }

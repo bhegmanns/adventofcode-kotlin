@@ -1,3 +1,5 @@
+
+
 fun main() {
 
     data class TimerValueWithCountOfLaternfishes(var timerValue: Int, var countOfLaternfishes: Long)
@@ -70,12 +72,12 @@ fun main() {
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day06_test")
-    pruefe(part1(testInput), 5934)
+    checkEquals(part1(testInput), 5934)
     println("test for part1 passed")
     val input = readInput("Day06")
     println("result for part1 >>> " + part1(input))
     println("-----")
-    pruefe(part2(testInput), 26984457539L)
+    checkEquals(part2(testInput), 26984457539L)
     println("test for part2 passed")
     println("result for part2 >>> " + part2(input))
 }

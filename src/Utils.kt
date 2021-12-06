@@ -12,14 +12,8 @@ fun readInput(name: String) = File("src", "$name.txt").readLines()
  */
 fun String.md5(): String = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray())).toString(16)
 
-fun pruefe(givenValue: Int, expectedValue: Int) {
-    check(givenValue == expectedValue) {
-        "given: " + givenValue + " but expected: " + expectedValue
-    }
-}
-
-fun pruefe(givenValue: Long, expectedValue: Long) {
-    check(givenValue == expectedValue) {
+fun <T> checkEquals(givenValue: T, expectedValue: T) {
+    check(givenValue == expectedValue){
         "given: " + givenValue + " but expected: " + expectedValue
     }
 }
