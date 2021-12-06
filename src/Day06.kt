@@ -2,9 +2,9 @@
 
 fun main() {
 
-    data class TimerValueWithCountOfLaternfishes(var timerValue: Int, var countOfLaternfishes: Long)
+    data class TimerValueWithCountOfLanternfishes(var timerValue: Int, var countOfLanternfishes: Long)
 
-    class Laternfish(var internalTimer: Int){
+    class Lanternfish(var internalTimer: Int){
         fun nextDay(): Boolean {
             internalTimer--
             if (internalTimer < 0) {
@@ -22,25 +22,25 @@ fun main() {
     fun part1(input: List<String>): Int {
         val split = input[0].split(",").map { s -> s.toInt() }
 
-        val allLaternFishes: MutableList<Laternfish> = mutableListOf()
+        val allLanternFishes: MutableList<Lanternfish> = mutableListOf()
         for (timerdef in split) {
-            allLaternFishes.add(Laternfish(timerdef))
+            allLanternFishes.add(Lanternfish(timerdef))
         }
 
         for (i in 0 until 80 step 1) {
-            var countNewLaterfishesForTheDay = 0
-            for (laternfish in allLaternFishes) {
+            var countNewLanterfishesForTheDay = 0
+            for (laternfish in allLanternFishes) {
                 if (laternfish.nextDay()) {
-                    countNewLaterfishesForTheDay++
+                    countNewLanterfishesForTheDay++
                 }
             }
-            for (c in 0 until countNewLaterfishesForTheDay step 1) {
-                allLaternFishes.add(Laternfish(8))
+            for (c in 0 until countNewLanterfishesForTheDay step 1) {
+                allLanternFishes.add(Lanternfish(8))
             }
 
         }
 
-        return allLaternFishes.size
+        return allLanternFishes.size
     }
 
     fun part2(input: List<String>): Long {
@@ -48,26 +48,26 @@ fun main() {
 
 
 
-        val timers: MutableList<TimerValueWithCountOfLaternfishes> = mutableListOf()
+        val timers: MutableList<TimerValueWithCountOfLanternfishes> = mutableListOf()
         // {0 -> -1 ; 1 -> 0 ; 2 -> 1 ; 3 -> 2 ; 4 -> 3 ; 5 -> 4 ; 6 -> 5 ; 7 -> 6 ; 8 -> 7 ; 9 -> 8}
         for (timerValue in -1 until 9 step 1) {
-            timers.add(TimerValueWithCountOfLaternfishes(timerValue, 0))
+            timers.add(TimerValueWithCountOfLanternfishes(timerValue, 0))
         }
         for (i in split) {
-            timers[i+1].countOfLaternfishes++
+            timers[i+1].countOfLanternfishes++
         }
 
         for (day in 0 until 256 step 1) {
 //            println(timers)
-            val currentCountForNegativ = timers[1].countOfLaternfishes
+            val currentCountForNegativ = timers[1].countOfLanternfishes
             for (timerIndex in 0 until 9 step 1) {
-                timers[timerIndex].countOfLaternfishes = timers[timerIndex+1].countOfLaternfishes
+                timers[timerIndex].countOfLanternfishes = timers[timerIndex+1].countOfLanternfishes
             }
-            timers[9].countOfLaternfishes = currentCountForNegativ
-            timers[7].countOfLaternfishes += currentCountForNegativ
+            timers[9].countOfLanternfishes = currentCountForNegativ
+            timers[7].countOfLanternfishes += currentCountForNegativ
         }
 
-        return timers.filter{t->t.timerValue!=-1}.map { t -> t.countOfLaternfishes }.sum()
+        return timers.filter{t->t.timerValue!=-1}.map { t -> t.countOfLanternfishes }.sum()
     }
 
     // test if implementation meets criteria from the description, like:
