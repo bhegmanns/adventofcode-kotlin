@@ -2,18 +2,13 @@ import kotlin.math.abs
 
 fun main() {
 
-
-
-
-
     fun part1(input: List<String>): Int {
-        val horizontalPositions = input[0].split(",").map { s -> s.toInt() }
+        val horizontalPositions = input[0].split(",").map { s -> s.toInt() }.sorted()
 
         val neededFuels = mutableListOf<Int>()
 
-        for (iteration in 0 until horizontalPositions.size step 1) {
-            val finalHorizontalPosition = horizontalPositions[iteration]
-            neededFuels.add(horizontalPositions.map { h -> abs(finalHorizontalPosition-h) }.sum())
+        for (finalHorizontalPosition in horizontalPositions.first() until horizontalPositions.last() + 1 step 1) {
+            neededFuels.add(horizontalPositions.sumOf { h -> abs(finalHorizontalPosition - h) })
         }
 
         neededFuels.sort()
@@ -29,9 +24,8 @@ fun main() {
 
         val neededFuels = mutableListOf<Int>()
 
-        for (iteration in horizontalPositions.first() until horizontalPositions.last() + 1 step 1) {
-            val finalHorizontalPosition = iteration
-            neededFuels.add(horizontalPositions.map { h -> sumFromOneUntil(abs(finalHorizontalPosition-h)) }.sum())
+        for (finalHorizontalPosition in horizontalPositions.first() until horizontalPositions.last() + 1 step 1) {
+            neededFuels.add(horizontalPositions.sumOf { h -> sumFromOneUntil(abs(finalHorizontalPosition-h)) })
         }
 
         neededFuels.sort()
@@ -44,8 +38,10 @@ fun main() {
     println("test for part1 passed")
     val input = readInput("Day07")
     println("result for part1 >>> " + part1(input))
+    checkEquals(part1(input), 328262)
     println("-----")
     checkEquals(part2(testInput), 168)
     println("test for part2 passed")
     println("result for part2 >>> " + part2(input))
+    checkEquals(part2(input), 90040997)
 }
