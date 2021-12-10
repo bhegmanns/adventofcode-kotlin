@@ -1,7 +1,6 @@
 fun main() {
 
-    data class PointInMap(var column: Int, var line: Int){
-    }
+    data class PointInMap(var column: Int, var line: Int)
 
     fun createMap(input: List<String>): MutableList<MutableList<Int>> {
         val lines: MutableList<MutableList<Int>> = mutableListOf()
@@ -15,20 +14,16 @@ fun main() {
         return lines
     }
 
-
-    fun part1(input: List<String>): Int {
-        val lines: MutableList<MutableList<Int>> = createMap(input)
-
+    fun calculateSingleLowPoints(lines: MutableList<MutableList<Int>>): MutableList<PointInMap> {
+        val singleLowPoints: MutableList<PointInMap> = mutableListOf()
         val countColumns = lines[0].size
-        var riskLevel = 0
-
         for (column in 0 until countColumns step 1) {
             for (line in 0 until lines.size step 1) {
                 var countHigherLocation = 0
                 val currentLocationHeight = lines[line][column]
 
                 if (column != 0) {
-                    if (lines.get(line).get(column - 1) > currentLocationHeight) {
+                    if (lines[line][column - 1] > currentLocationHeight) {
                         countHigherLocation++
                     }
                 } else {
@@ -36,7 +31,7 @@ fun main() {
                 }
 
                 if (line != 0) {
-                    if (lines.get(line - 1).get(column) > currentLocationHeight) {
+                    if (lines[line - 1][column] > currentLocationHeight) {
                         countHigherLocation++
                     }
                 } else {
@@ -44,7 +39,7 @@ fun main() {
                 }
 
                 if (column != countColumns - 1) {
-                    if (lines.get(line).get(column + 1) > currentLocationHeight) {
+                    if (lines[line][column + 1] > currentLocationHeight) {
                         countHigherLocation++
                     }
                 } else {
@@ -52,7 +47,7 @@ fun main() {
                 }
 
                 if (line != lines.size - 1) {
-                    if (lines.get(line + 1).get(column) > currentLocationHeight) {
+                    if (lines[line + 1][column] > currentLocationHeight) {
                         countHigherLocation++
                     }
                 }else {
@@ -60,9 +55,23 @@ fun main() {
                 }
 
                 if (countHigherLocation == 4) {
-                    riskLevel+= currentLocationHeight+1
+                    singleLowPoints.add(PointInMap(column, line))
                 }
             }
+        }
+
+        return singleLowPoints
+    }
+
+
+    fun part1(input: List<String>): Int {
+        val lines: MutableList<MutableList<Int>> = createMap(input)
+
+        var riskLevel = 0
+
+        val singleLowPoints = calculateSingleLowPoints(lines)
+        for (singleLowPoint in singleLowPoints) {
+            riskLevel += lines[singleLowPoint.line][singleLowPoint.column] + 1
         }
 
         return riskLevel
@@ -103,61 +112,19 @@ fun main() {
         return currentSize
     }
 
+
+
     fun part2(input: List<String>): Int {
         val lines: MutableList<MutableList<Int>> = createMap(input)
 
 
-        val singleLowPoints: MutableList<PointInMap> = mutableListOf()
-        val countColumns = lines[0].size
-
-        for (column in 0 until countColumns step 1) {
-            for (line in 0 until lines.size step 1) {
-                var countHigherLocation = 0
-                val currentLocationHeight = lines[line][column]
-
-                if (column != 0) {
-                    if (lines.get(line).get(column - 1) > currentLocationHeight) {
-                        countHigherLocation++
-                    }
-                } else {
-                    countHigherLocation++
-                }
-
-                if (line != 0) {
-                    if (lines.get(line - 1).get(column) > currentLocationHeight) {
-                        countHigherLocation++
-                    }
-                } else {
-                    countHigherLocation++
-                }
-
-                if (column != countColumns - 1) {
-                    if (lines.get(line).get(column + 1) > currentLocationHeight) {
-                        countHigherLocation++
-                    }
-                } else {
-                    countHigherLocation++
-                }
-
-                if (line != lines.size - 1) {
-                    if (lines.get(line + 1).get(column) > currentLocationHeight) {
-                        countHigherLocation++
-                    }
-                }else {
-                    countHigherLocation++
-                }
-
-                if (countHigherLocation == 4) {
-                    singleLowPoints.add(PointInMap(column, line))
-                }
-            }
-        }
+        val singleLowPoints = calculateSingleLowPoints(lines)
 
         // know calculate each basin ...
         val basins: MutableMap<PointInMap, Int> = mutableMapOf()
         for (point in singleLowPoints) {
             val basinSize = calculateBasinSize(point, lines)
-            basins.put(point, basinSize)
+            basins[point] = basinSize
         }
         val sortedDescending = basins.values.sortedDescending()
 
